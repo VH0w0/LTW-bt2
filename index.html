@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>Quản lý sinh viên</title>
+</head>
+<body>
+  <h1>Quản lý sinh viên</h1>
+
+  <label for="soLuongSV">Số lượng sinh viên:</label>
+  <input type="number" id="soLuongSV">
+
+  <button onclick="taoDanhSachSV()">Tạo danh sách</button>
+
+  <div id="danhSachSV"></div>
+
+  <script>
+    // Định nghĩa lớp SinhVien
+    class SinhVien {
+      constructor(maSV, hoTen, ngaySinh, lopHoc, diemGPA) {
+        this.maSV = maSV;
+        this.hoTen = hoTen;
+        this.ngaySinh = ngaySinh;
+        this.lopHoc = lopHoc;
+        this.diemGPA = diemGPA;
+      }
+    }
+
+    let danhSachSV = [];
+
+    // Hàm tạo danh sách sinh viên
+    function taoDanhSachSV() {
+      danhSachSV = [];
+
+      let soLuongSV = parseInt(document.getElementById("soLuongSV").value);
+
+      // Tạo danh sách sinh viên
+      for (let i = 0; i < soLuongSV; i++) {
+        let maSV = (i + 1).toString();
+        let hoTen = prompt("Nhập họ và tên:");
+        let ngaySinh = prompt("Nhập ngày sinh (dd/mm/yyyy):");
+        let lopHoc = prompt("Nhập lớp học:");
+        let diemGPA = parseFloat(prompt("Nhập điểm GPA:"));
+
+        let sv = new SinhVien(maSV, hoTen, ngaySinh, lopHoc, diemGPA);
+        danhSachSV.push(sv);
+      }
+
+      hienThiDanhSachSV();
+    }
+
+    // Hàm hiển thị danh sách sinh viên
+    function hienThiDanhSachSV() {
+      let danhSachSVElement = document.getElementById("danhSachSV");
+      danhSachSVElement.innerHTML = "";
+
+      for (let i = 0; i < danhSachSV.length; i++) {
+        let sv = danhSachSV[i];
+
+        let sinhVienElement = document.createElement("div");
+        sinhVienElement.innerHTML = `
+          <h3>Sinh viên thứ ${i + 1}</h3>
+          <p>Mã sinh viên: ${sv.maSV}</p>
+          <p>Họ và tên: ${sv.hoTen}</p>
+          <p>Ngày sinh: ${sv.ngaySinh}</p>
+          <p>Lớp học: ${sv.lopHoc}</p>
+          <p>Điểm GPA: ${sv.diemGPA}</p>
+          <hr>
+        `;
+
+        danhSachSVElement.appendChild(sinhVienElement);
+      }
+    }
+  </script>
+</body>
+</html>
